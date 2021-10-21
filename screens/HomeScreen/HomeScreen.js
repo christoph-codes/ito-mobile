@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import InputText from '../../components/InputText';
-import InputRadio from '../../components/InputRadio';
+// import InputRadio from '../../components/InputRadio';
 import Button from '../../components/Button';
 import Container from '../../components/Container';
 import FeedbackText from '../../components/FeedbackText/FeedbackText';
@@ -18,27 +18,28 @@ const styles = StyleSheet.create({
 
 const HomeScreen = ({ navigation }) => {
 	const [familyCode, setFamilyCode] = useState('');
-	const [userType, setUserType] = useState('');
+	// const [userType, setUserType] = useState('');
 	const [feedback, setFeedback] = useState('');
 	const login = () => {
 		if (familyCode) {
-			if (userType) {
-				if (userType === 'child') {
-					navigation.navigate('ChildLogin');
-					setFamilyCode('');
-					setUserType('');
-					setFeedback('');
-				}
-				if (userType === 'parent') {
-					navigation.navigate('ParentLogin');
-					setFamilyCode('');
-					setUserType('');
-					setFeedback('');
-				}
-				console.log('Loggin In');
-			} else {
-				setFeedback('You must select a type of user.');
-			}
+			navigation.navigate('ChildLogin');
+			// if (userType) {
+			// 	if (userType === 'child') {
+			// 		navigation.navigate('ChildLogin');
+			// 		setFamilyCode('');
+			// 		setUserType('');
+			// 		setFeedback('');
+			// 	}
+			// 	if (userType === 'parent') {
+			// 		navigation.navigate('ParentLogin');
+			// 		setFamilyCode('');
+			// 		setUserType('');
+			// 		setFeedback('');
+			// 	}
+			// 	console.log('Loggin In');
+			// } else {
+			// 	setFeedback('You must select a type of user.');
+			// }
 		} else {
 			setFeedback('You must enter a family code.');
 		}
@@ -56,7 +57,7 @@ const HomeScreen = ({ navigation }) => {
 					value={familyCode.toLowerCase()}
 					onFocus={() => setFeedback('')}
 				/>
-				<View style={styles.radios}>
+				{/* <View style={styles.radios}>
 					<InputRadio
 						label="Parent"
 						className="mr-3"
@@ -72,7 +73,7 @@ const HomeScreen = ({ navigation }) => {
 						value={userType === 'child'}
 						onChange={() => setUserType('child')}
 					/>
-				</View>
+				</View> */}
 				<FeedbackText feedback={feedback}>{feedback}</FeedbackText>
 				<Button onPress={login}>Login</Button>
 			</View>

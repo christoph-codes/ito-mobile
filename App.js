@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
 
 const App = () => {
 	return (
-		<UserProvider>
+		// <UserProvider>
 			<View style={styles.App}>
 				<NavigationContainer>
 					<Stack.Navigator
@@ -40,10 +40,10 @@ const App = () => {
 							name="ChildDashboard"
 							component={ChildDashboard}
 						/>
-						<Stack.Screen
+						{/* <Stack.Screen
 							name="ParentLogin"
 							component={ParentLogin}
-						/>
+						/> */}
 						<Stack.Screen
 							name="ChildLogin"
 							component={ChildLogin}
@@ -51,7 +51,7 @@ const App = () => {
 					</Stack.Navigator>
 				</NavigationContainer>
 			</View>
-		</UserProvider>
+		// </UserProvider>
 	);
 };
 

@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
 	},
 });
 
-const ChildLogin = ({ parentData }) => {
+const ChildLogin = ({ navigation, parentData }) => {
 	const [childName, setChildName] = useState('');
 	const [childPin, setChildPin] = useState('');
 	const [feedback, setFeedback] = useState('');
@@ -23,10 +23,11 @@ const ChildLogin = ({ parentData }) => {
 
 	useEffect(() => {
 		if (parentData?.email) {
-			const kids = firestore
-				.collection('users')
-				.doc(parentData.email)
-				.collection('kids');
+			console.log('got the parent email');
+			// const kids = firestore
+			// 	.collection('users')
+			// 	.doc(parentData.email)
+			// 	.collection('kids');
 
 			// kids.get()
 			// 	.then((snapshot) => {
@@ -42,7 +43,8 @@ const ChildLogin = ({ parentData }) => {
 			// 		setFeedback(err);
 			// 	});
 		} else {
-			navigator.navigate('Login');
+			// navigation.navigate('Login');
+			console.log('Not ready to login');
 		}
 
 		console.log();
