@@ -7,8 +7,8 @@ import HomeScreen from './screens/HomeScreen';
 import LogoTitle from './components/LogoTitle';
 import colors from './GlobalStyles';
 import ChildDashboard from './screens/ChildDashboard';
-import UserProvider from './providers/UserProvider';
-import ParentLogin from './screens/ParentLogin';
+// import UserProvider from './providers/UserProvider';
+// import ParentLogin from './screens/ParentLogin';
 import ChildLogin from './screens/ChildLogin';
 
 const Stack = createNativeStackNavigator();
@@ -23,34 +23,35 @@ const styles = StyleSheet.create({
 const App = () => {
 	return (
 		// <UserProvider>
-			<View style={styles.App}>
-				<NavigationContainer>
-					<Stack.Navigator
-						screenOptions={{
-							headerTitle: (props) => <LogoTitle {...props} />,
-							headerTintColor: colors.white,
-							headerStyle: {
-								backgroundColor: colors.primary,
-								paddingVertical: 40,
-							},
-						}}
-					>
-						<Stack.Screen name="Login" component={HomeScreen} />
-						<Stack.Screen
-							name="ChildDashboard"
-							component={ChildDashboard}
-						/>
-						{/* <Stack.Screen
+		<View style={styles.App}>
+			<NavigationContainer>
+				<Stack.Navigator
+					screenOptions={{
+						headerTitle: (props) => <LogoTitle {...props} />,
+						headerTintColor: colors.white,
+						headerStyle: {
+							backgroundColor: colors.primary,
+							paddingVertical: 40,
+						},
+					}}
+				>
+					<Stack.Screen
+						options={{ headerShown: false }}
+						name="Login"
+						component={HomeScreen}
+					/>
+					<Stack.Screen
+						name="ChildDashboard"
+						component={ChildDashboard}
+					/>
+					{/* <Stack.Screen
 							name="ParentLogin"
 							component={ParentLogin}
 						/> */}
-						<Stack.Screen
-							name="ChildLogin"
-							component={ChildLogin}
-						/>
-					</Stack.Navigator>
-				</NavigationContainer>
-			</View>
+					<Stack.Screen name="ChildLogin" component={ChildLogin} />
+				</Stack.Navigator>
+			</NavigationContainer>
+		</View>
 		// </UserProvider>
 	);
 };

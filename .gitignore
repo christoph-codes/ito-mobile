@@ -14,3 +14,7 @@ web-build/
 
 package-lock.json
 yarn.lock
+.env
+firebase-debug.log
+firestore-debug.log
+ui-debug.log

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
+import { firestore } from '../../config/firebaseConfig';
 import colors from '../../GlobalStyles';
 import Container from '../../components/Container';
 import H1 from '../../components/H1';
@@ -15,19 +16,22 @@ const styles = StyleSheet.create({
 	},
 });
 
-const ChildLogin = ({ navigation, parentData }) => {
+const ChildLogin = ({ parentData }) => {
 	const [childName, setChildName] = useState('');
 	const [childPin, setChildPin] = useState('');
 	const [feedback, setFeedback] = useState('');
+	// eslint-disable-next-line no-unused-vars
 	const [children, setChildren] = useState([]);
 
 	useEffect(() => {
 		if (parentData?.email) {
 			console.log('got the parent email');
-			// const kids = firestore
-			// 	.collection('users')
-			// 	.doc(parentData.email)
-			// 	.collection('kids');
+			const kids = firestore
+				.collection('users')
+				.doc(parentData.email)
+				.collection('kids');
+
+			console.log('kids', kids);
 
 			// kids.get()
 			// 	.then((snapshot) => {

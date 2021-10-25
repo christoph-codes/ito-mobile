@@ -23,9 +23,8 @@ const styles = StyleSheet.create({
 	},
 	container: {
 		alignSelf: 'center',
-		justifyContent: 'space-between',
+		justifyContent: 'center',
 		alignContent: 'center',
-		height: 200,
 		width: 300,
 		flex: 1,
 	},

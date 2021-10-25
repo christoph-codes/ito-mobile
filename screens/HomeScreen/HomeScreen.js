@@ -7,6 +7,7 @@ import Container from '../../components/Container';
 import FeedbackText from '../../components/FeedbackText/FeedbackText';
 import H1 from '../../components/H1';
 import Logo from '../../components/Logo';
+import { firestore } from '../../config/firebaseConfig';
 
 const styles = StyleSheet.create({
 	radios: {
@@ -22,7 +23,27 @@ const HomeScreen = ({ navigation }) => {
 	const [feedback, setFeedback] = useState('');
 	const login = () => {
 		if (familyCode) {
-			navigation.navigate('ChildLogin');
+			const users = firestore
+				.collection('users')
+				.where('familycode', '==', familyCode);
+			users.get().then((snapshot) => {
+				console.log(snapshot.docs);
+				// if (!snapshot.empty) {
+				// 	snapshot.docs.forEach((doc) => {
+				// 		// console.log('docdata', doc.data());
+				// 		const parent = doc.data();
+				// 		navigation.navigate('ChildLogin', parent);
+				// 		// if (userType === 'parent') {
+				// 		// 	history.push('/parent-login', parent.email);
+				// 		// } else {
+				// 		// 	history.push('/child-login', parent);
+				// 		// }
+				// 	});
+				// } else {
+				// 	setFeedback('This is not a valid family code.');
+				// }
+			});
+
 			// if (userType) {
 			// 	if (userType === 'child') {
 			// 		navigation.navigate('ChildLogin');
