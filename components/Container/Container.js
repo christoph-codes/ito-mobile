@@ -6,34 +6,19 @@ import {
 	StyleSheet,
 	Platform,
 	Keyboard,
-	Text,
 } from 'react-native';
 import colors from '../../GlobalStyles';
 
 const styles = StyleSheet.create({
 	Container: {
 		flex: 1,
-		alignItems: 'center',
-		justifyContent: 'center',
 	},
 	inner: {
-		alignSelf: 'center',
-		justifyContent: 'center',
-		alignContent: 'center',
-	},
-	container: {
-		alignSelf: 'center',
-		justifyContent: 'center',
-		alignContent: 'center',
-		width: 300,
 		flex: 1,
 	},
-	copyright: {
-		backgroundColor: colors.primary,
-		textAlign: 'center',
-		paddingBottom: 32,
-		justifyContent: 'flex-end',
-		color: colors['primary-light'],
+	container: {
+		flex: 1,
+		margin: 32,
 	},
 });
 
@@ -48,15 +33,9 @@ const Container = ({ children, bgColor = colors.primary }) => {
 					style={styles.inner}
 					onPress={Keyboard.dismiss}
 				>
-					<View style={styles.container}>
-						<View>{children}</View>
-					</View>
+					<View style={styles.container}>{children}</View>
 				</TouchableWithoutFeedback>
 			</KeyboardAvoidingView>
-			<Text style={styles.copyright}>
-				Copyright {new Date().getFullYear()} &#169; InThisOrder. All
-				Rights Reserved.
-			</Text>
 		</>
 	);
 };
