@@ -41,6 +41,7 @@ const App = () => {
 						component={HomeScreen}
 					/>
 					<Stack.Screen
+						options={{ headerShown: false }}
 						name="ChildDashboard"
 						component={ChildDashboard}
 					/>
