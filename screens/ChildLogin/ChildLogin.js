@@ -16,42 +16,40 @@ const styles = StyleSheet.create({
 	},
 });
 
-const ChildLogin = ({ parentData }) => {
+const ChildLogin = ({ route, navigation }) => {
 	const [childName, setChildName] = useState('');
 	const [childPin, setChildPin] = useState('');
 	const [feedback, setFeedback] = useState('');
 	// eslint-disable-next-line no-unused-vars
 	const [children, setChildren] = useState([]);
 
+	const parent = route.params;
+
 	useEffect(() => {
-		if (parentData?.email) {
+		if (parent?.email) {
 			console.log('got the parent email');
 			const kids = firestore
 				.collection('users')
-				.doc(parentData.email)
+				.doc(parent.email)
 				.collection('kids');
 
-			console.log('kids', kids);
-
-			// kids.get()
-			// 	.then((snapshot) => {
-			// 		setChildren(
-			// 			snapshot.docs.map((doc) => {
-			// 				const kid = doc.data();
-			// 				kid.id = doc.id;
-			// 				return kid;
-			// 			})
-			// 		);
-			// 	})
-			// 	.catch((err) => {
-			// 		setFeedback(err);
-			// 	});
+			kids.get()
+				.then((snapshot) => {
+					setChildren(
+						snapshot.docs.map((doc) => {
+							const kid = doc.data();
+							kid.id = doc.id;
+							return kid;
+						})
+					);
+				})
+				.catch((err) => {
+					setFeedback(err);
+				});
 		} else {
 			// navigation.navigate('Login');
 			console.log('Not ready to login');
 		}
-
-		console.log();
 	}, []);
 
 	const login = () => {
@@ -66,19 +64,13 @@ const ChildLogin = ({ parentData }) => {
 		<Container bgColor={colors.secondary} style={styles.ChildLogin}>
 			<View>
 				<View style={styles.container}>
-					<Logo />
+					<Logo variant="white" />
 					<H1>Child Login</H1>
-					<InputText
-						label="Name"
-						autoCompleteType="name"
-						placeholder="Please Choose"
-						onChangeText={setChildName}
-						value={childName}
-					/>
 					<Picker
 						selectedValue={childName}
 						onValueChange={(itemValue) => setChildName(itemValue)}
 					>
+						<Picker.Item label="Please Choose" disabled value="" />
 						{children.map((child, index) => {
 							return (
 								<Picker.Item
@@ -88,13 +80,10 @@ const ChildLogin = ({ parentData }) => {
 								/>
 							);
 						})}
-						<Picker.Item label="Java" value="java" />
-						<Picker.Item label="JavaScript" value="js" />
 					</Picker>
 					<InputText
-						label="Password"
-						autoCompleteType="password"
-						placeholder="••••••••"
+						label="Child Pin"
+						placeholder="Your 4 digit pin"
 						secureTextEntry
 						onChangeText={setChildPin}
 						value={childPin}
