@@ -33,7 +33,6 @@ const InputText = ({ label, placeholder, ...rest }) => {
 				placeholder={`ie: ${placeholder || ''}`}
 				keyboardAppearance="dark"
 				showSoftInputOnFocus
-				textContentType="name"
 				{...rest}
 			/>
 		</View>
