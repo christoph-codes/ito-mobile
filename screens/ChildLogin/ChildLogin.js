@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
+import { View, StyleSheet, Text } from 'react-native';
+import { Select } from 'native-base';
 import { firestore } from '../../config/firebaseConfig';
 import colors from '../../GlobalStyles';
 import Container from '../../components/Container';
@@ -11,16 +11,38 @@ import Button from '../../components/Button';
 import Logo from '../../components/Logo';
 
 const styles = StyleSheet.create({
-	ChildLogin: {
-		backgroundColor: 'green',
+	centerView: {
+		flex: 1,
+		justifyContent: 'center',
+		width: '100%',
+		maxWidth: 400,
+		alignSelf: 'center',
+	},
+	select: {
+		backgroundColor: 'rgba(255,255,255,0.1)',
+		borderColor: colors.white,
+		borderStyle: 'solid',
+		borderWidth: 2,
+		borderRadius: 8,
+		paddingHorizontal: 8,
+		paddingVertical: 24,
+		color: colors.white,
+		fontSize: 24,
+		textAlign: 'center',
+		marginBottom: 16,
+		flexShrink: 1,
+		fontWeight: 'bold',
+		height: 60,
+	},
+	pickerStyle: {
+		fontSize: 24,
 	},
 });
 
-const ChildLogin = ({ route, navigation }) => {
+const ChildLogin = ({ route }) => {
 	const [childName, setChildName] = useState('');
 	const [childPin, setChildPin] = useState('');
 	const [feedback, setFeedback] = useState('');
-	// eslint-disable-next-line no-unused-vars
 	const [children, setChildren] = useState([]);
 
 	const parent = route.params;
@@ -62,31 +84,45 @@ const ChildLogin = ({ route, navigation }) => {
 	};
 	return (
 		<Container bgColor={colors.secondary} style={styles.ChildLogin}>
-			<View>
+			<View style={styles.centerView}>
 				<View style={styles.container}>
 					<Logo variant="white" />
 					<H1>Child Login</H1>
-					<Picker
+					<Text style={{ color: colors.white, marginBottom: 8 }}>
+						Child Name
+					</Text>
+					<Select
+						variant="unstyled"
+						itemStyle={styles.itemStyle}
+						style={styles.select}
+						accessibilityLabel="Find Child Name"
+						placeholder="Find Your Name"
+						placeholderTextColor={colors['secondary-bright']}
 						selectedValue={childName}
 						onValueChange={(itemValue) => setChildName(itemValue)}
+						dropdownIcon
 					>
-						<Picker.Item label="Please Choose" disabled value="" />
 						{children.map((child, index) => {
 							return (
-								<Picker.Item
+								<Select.Item
+									style={styles.pickerStyle}
+									color={colors.white}
 									key={index}
 									label={child.name}
 									value={child.name}
 								/>
 							);
 						})}
-					</Picker>
+					</Select>
 					<InputText
 						label="Child Pin"
 						placeholder="Your 4 digit pin"
 						secureTextEntry
 						onChangeText={setChildPin}
 						value={childPin}
+						maxLength={4}
+						numeric
+						keyboardType="number-pad"
 					/>
 					<FeedbackText feedback={feedback}>{feedback}</FeedbackText>
 					<Button variant="primary" onPress={login}>
