@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { Select } from 'native-base';
 import { firestore } from '../../config/firebaseConfig';
+import { ChildContext } from '../../providers/ChildProvider';
 import colors from '../../GlobalStyles';
 import Container from '../../components/Container';
 import H1 from '../../components/H1';
@@ -39,9 +40,11 @@ const styles = StyleSheet.create({
 	},
 });
 
-const ChildLogin = ({ route }) => {
+const ChildLogin = ({ route, navigation }) => {
+	const { setChild } = useContext(ChildContext);
 	const [childName, setChildName] = useState('');
 	const [childPin, setChildPin] = useState('');
+	const [dataPin, setDataPin] = useState('');
 	const [feedback, setFeedback] = useState('');
 	const [children, setChildren] = useState([]);
 
@@ -74,7 +77,32 @@ const ChildLogin = ({ route }) => {
 		}
 	}, []);
 
+	useEffect(() => {
+		if (childName) {
+			const selectedChild = children.filter((theChild) => {
+				return theChild.name === childName;
+			});
+			setDataPin(selectedChild[0].pin);
+		}
+	}, [childName, children]);
+
 	const login = () => {
+		if (childName && childPin) {
+			if (childPin === dataPin) {
+				setChild((prev) => ({
+					...prev,
+					name: childName,
+					parentemail: parent.email,
+					parentid: parent.authid,
+					loggedInStatus: true,
+				}));
+				navigation.navigate('ChildDashboard');
+			} else {
+				setFeedback('You have entered the wrong pin number');
+			}
+		} else {
+			setFeedback('All fields must be filled out');
+		}
 		if (childName && childPin) {
 			setFeedback('');
 		} else {
@@ -116,12 +144,11 @@ const ChildLogin = ({ route }) => {
 					</Select>
 					<InputText
 						label="Child Pin"
+						pattern="^[0-9]*$"
 						placeholder="Your 4 digit pin"
-						secureTextEntry
 						onChangeText={setChildPin}
-						value={childPin}
+						value={childPin.replace(/[^0-9]/g, '')}
 						maxLength={4}
-						numeric
 						keyboardType="number-pad"
 					/>
 					<FeedbackText feedback={feedback}>{feedback}</FeedbackText>
