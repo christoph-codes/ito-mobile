@@ -1,5 +1,4 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import Spinner from '../../components/Spinner';
 
 const styles = StyleSheet.create({
 	ChildDashboard: {
@@ -9,6 +8,9 @@ const styles = StyleSheet.create({
 });
 
 const ChildDashboard = () => {
+	if (areChildTasksLoading) {
+		return <Spinner />;
+	}
 	return (
 		<View style={styles.ChildDashboard}>
 			<Text>ChildDashboard</Text>
