@@ -7,6 +7,7 @@ import {
 	Dimensions,
 } from 'react-native';
 // import confetti from 'canvas-confetti';
+import Confetti from 'react-native-confetti';
 import { firestore } from '../../config/firebaseConfig';
 import { ChildContext } from '../../providers/ChildProvider';
 import generateFinishMessage from '../../util/finishMessages';
@@ -109,6 +110,15 @@ const ChildDashboard = () => {
 		useContext(ChildContext);
 	const [disableButton, setDisableButton] = useState(false);
 	const [successMessage, setSuccessMessage] = useState('');
+	const [shoot, setShoot] = useState(false);
+
+	const shootConfetti = () => {
+		Confetti.confettiView.startConfetti();
+		setShoot(true);
+		setTimeout(() => {
+			setShoot(false);
+		}, 7000);
+	};
 
 	const [activeTask, setActiveTask] = useState(() => {
 		if (childTasks && childTasks[0]) {
@@ -124,6 +134,7 @@ const ChildDashboard = () => {
 				completeTask(id);
 				setSuccessMessage(generateFinishMessage());
 				// confetti();
+				shootConfetti();
 				setTimeout(() => {
 					setDisableButton(false);
 					setSuccessMessage('');
@@ -175,11 +186,25 @@ const ChildDashboard = () => {
 				!activeTask && styles.ChildDashboardDone,
 			]}
 		>
+			<Confetti
+				confettiCount={100}
+				untilStopped={shoot}
+				colors={[
+					colors.primary,
+					colors.secondary,
+					colors['primary-light'],
+					colors['secondary-hover'],
+					colors.mint,
+					colors.sun,
+					colors.taffy,
+				]}
+			/>
 			<View style={styles.content}>
 				{activeTask ? (
 					<>
-						<Text style={styles.childName}>{child.name}</Text>
-
+						<TouchableOpacity onPress={() => shootConfetti()}>
+							<Text style={styles.childName}>{child.name}</Text>
+						</TouchableOpacity>
 						{!disableButton ? (
 							<>
 								<Text style={styles.taskItem}>
